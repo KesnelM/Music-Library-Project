@@ -4,22 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MusiCollection</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   </head>
   <body>
     <!-- Header with Navigation -->
     <header>
       <div class="container header-container">
         <h1>MusiCollection</h1>
-        <nav>
-          <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#albums">Albums</a></li>
-            <li><a href="#songs">Songs</a></li>
-            <li><a href="#artists">Artists</a></li>
-            <li><a href="#assign">Assign Artist</a></li>
-          </ul>
-        </nav>
       </div>
     </header>
 
