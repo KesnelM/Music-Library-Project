@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MusiCollection</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header with Navigation -->
+    <header>
+      <div class="container header-container">
+        <h1>MusiCollection</h1>
+      </header>
+    <h1>Sign Up</h1>
+    <form action="/signup" method="post">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>
+      Already have an account? <a href="{{ url_for('login') }}">Log in here</a>.
+    </p>
+    <footer>
+      <p>&copy; 2025 MusiCollection. All rights reserved.</p>

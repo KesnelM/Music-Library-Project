@@ -8,10 +8,19 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
-# creates the Database
+
 mycursor.execute("CREATE DATABASE IF NOT EXISTS musicLib ")
 
-# creates the Table
+
+
+mycursor.execute("""CREATE TABLE IF NOT EXISTS Users
+    (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(255) NOT NULL,
+    Password VARCHAR(255) NOT NULL
+    )
+""")
+
 mycursor.execute("""CREATE TABLE IF NOT EXISTS Songs
     (
     SongID INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,7 +31,9 @@ mycursor.execute("""CREATE TABLE IF NOT EXISTS Songs
     ReleaseYear YEAR,
     Duration TIME,
     TrackNumber INT,
-    AddedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    AddedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UserID INT,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
     ) 
     """)
 
