@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 import mysql.connector
 
 app = Flask(__name__)
@@ -15,8 +15,20 @@ mycursor = mydb.cursor()
 app.secret_key = 'supersecretkey'
 
 @app.route('/')
-def index():
+def signup_page(): 
     return render_template('signup.html')
+
+
+@app.route('/home')
+def home_page():
+    username = session.get('username')
+    if not username:
+        return redirect(url_for('signup_page'))  
+    return render_template('index.html', username=session.get('username'))
+
+@app.route('/login')
+def login_page():
+    return render_template('login.html')
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -30,15 +42,14 @@ def signup():
         mydb.commit()
         user_id = mycursor.lastrowid 
         session['user_id'] = user_id
+        session['username'] = username
         
     except Exception as e:
         return f"An error occurred: {e}"
 
-    return render_template('index.html', username=username)
+    return redirect(url_for('home_page'))
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+
 
 @app.route('/login_now', methods=['POST'])
 def sum_login():
@@ -52,7 +63,9 @@ def sum_login():
     user = mycursor.fetchone()
 
     if user:
-        return render_template('index.html', username=username)
+        session['user_id'] = user[0]
+        session['username'] = username  # ✅ set session
+        return redirect(url_for('home_page'))
     else:
         return "Invalid credentials"
 
