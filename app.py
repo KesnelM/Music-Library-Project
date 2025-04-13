@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import mysql.connector
 
 app = Flask(__name__)
@@ -11,6 +11,8 @@ mydb = mysql.connector.connect(
     database="musicLib"
 )
 mycursor = mydb.cursor()
+
+app.secret_key = 'supersecretkey'
 
 @app.route('/')
 def index():
@@ -26,10 +28,13 @@ def signup():
         val = (username, password)
         mycursor.execute(sql, val)
         mydb.commit()
+        user_id = mycursor.lastrowid 
+        session['user_id'] = user_id
+        
     except Exception as e:
         return f"An error occurred: {e}"
 
-    return render_template('index.html')
+    return render_template('index.html', username=username)
 
 @app.route('/login')
 def login():
@@ -37,6 +42,7 @@ def login():
 
 @app.route('/login_now', methods=['POST'])
 def sum_login():
+    
     username = request.form['username']
     password = request.form['password']
 
@@ -46,30 +52,37 @@ def sum_login():
     user = mycursor.fetchone()
 
     if user:
-        return render_template('index.html')
+        return render_template('index.html', username=username)
     else:
         return "Invalid credentials"
 
-@app.route('/add-album', methods=['POST'])
-def add_album():
-    title = request.form['album-title']
-    release_date = request.form['release-date']
-    track_count = request.form['track-list']
+@app.route('/add-song', methods=['POST'])
+def add_song():
+    user_id = session.get('user_id')
+    if not user_id:
+            return "User not logged in"
+    
+    title = request.form['title']
+    artist = request.form['artist']
+    album = request.form['album']
+    genre = request.form['genre']
+    release_year = request.form['release-year']
+    duration = request.form['duration']
+    track_number = request.form['track-number']
 
     try:
         sql = """
-            INSERT INTO Songs (Title, Artist ,Album, ReleaseYear, TrackNumber)
-            VALUES (%s, "Unknown Artist",%s, %s, %s)
-        """
-        release_year = release_date.split('-')[0] 
+        INSERT INTO Songs (Title, Artist, Album, Genre, ReleaseYear, Duration, TrackNumber, UserID)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+    """
 
-        val = (title, title, release_year, track_count) 
+        val = (title, artist, album, genre, release_year, duration, track_number, user_id) 
         mycursor.execute(sql, val)
         mydb.commit()
     except Exception as e:
         return f"An error occurred: {e}"
 
-    return redirect('index.html')
+    return render_template('index.html', message="Song added successfully!")
 
 if __name__ == '__main__':
     app.run(debug=True)

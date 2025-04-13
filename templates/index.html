@@ -28,7 +28,9 @@
       <!-- Home Section -->
       <section id="home">
         <div class="container">
-          <h2>Welcome</h2>
+          {% if username %}
+          <h3>Welcome, {{ username }}!</h3>
+          {% endif %}
           <p>
             Welcome to the Music Database Application. Use the navigation menu
             above to explore and add information about albums, songs, and
@@ -36,137 +38,49 @@
           </p>
         </div>
       </section>
-
-      <!-- Albums Section -->
-      <section id="albums">
+      <section id="add-song">
         <div class="container">
-          <h2>Albums</h2>
-          <form action="/add-album" method="post">
+          <h2>Add New Song</h2>
+          <form action="/add-song" method="post">
             <div class="form-group">
-              <label for="album-title">Album Title</label>
-              <input
-                type="text"
-                id="album-title"
-                name="album-title"
-                placeholder="Enter album title"
-              />
+              <label for="title">Song Title</label>
+              <input type="text" id="title" name="title" required />
             </div>
+      
             <div class="form-group">
-              <label for="release-date">Release Date</label>
-              <input type="date" id="release-date" name="release-date" />
+              <label for="artist">Artist Name</label>
+              <input type="text" id="artist-id" name="artist" required />
             </div>
+      
             <div class="form-group">
-              <label for="track-list">Number of Tracks</label>
-              <input
-                type="number"
-                id="track-list"
-                name="track-list"
-                min="1"
-                placeholder="Enter number of tracks"
-              />
+              <label for="album">Album</label>
+              <input type="text" id="album" name="album" />
             </div>
-            <button type="submit">Add Album</button>
+      
+            <div class="form-group">
+              <label for="genre">Genre</label>
+              <input type="text" id="genre" name="genre" />
+            </div>
+      
+            <div class="form-group">
+              <label for="release-year">Release Year</label>
+              <input type="number" id="release-year" name="release-year" min="1900" max="2100" />
+            </div>
+      
+            <div class="form-group">
+              <label for="duration">Duration (HH:MM:SS)</label>
+              <input type="text" id="duration" name="duration" placeholder="00:03:30" />
+            </div>
+      
+            <div class="form-group">
+              <label for="track-number">Track Number</label>
+              <input type="number" id="track-number" name="track-number" min="1" />
+            </div>
+      
+            <button type="submit">Submit Song</button>
           </form>
         </div>
       </section>
-
-      <!-- Songs Section -->
-      <section id="songs">
-        <div class="container">
-          <h2>Songs</h2>
-          <form action="#" method="post">
-            <div class="form-group">
-              <label for="song-title">Song Title</label>
-              <input
-                type="text"
-                id="song-title"
-                name="song-title"
-                placeholder="Enter song title"
-              />
-            </div>
-            <div class="form-group">
-              <label for="song-release-date">Release Date</label>
-              <input type="date" id="song-release-date" name="song-release-date" />
-            </div>
-            <div class="form-group">
-              <label for="album-id">Album ID</label>
-              <input
-                type="number"
-                id="album-id"
-                name="album-id"
-                placeholder="Enter album ID"
-              />
-            </div>
-            <div class="form-group">
-              <label for="genre-id">Genre ID</label>
-              <input
-                type="number"
-                id="genre-id"
-                name="genre-id"
-                placeholder="Enter genre ID"
-              />
-            </div>
-            <button type="submit">Add Song</button>
-          </form>
-        </div>
-      </section>
-
-      <!-- Artists Section -->
-      <section id="artists">
-        <div class="container">
-          <h2>Artists</h2>
-          <form action="#" method="post">
-            <div class="form-group">
-              <label for="artist-name">Artist Name</label>
-              <input
-                type="text"
-                id="artist-name"
-                name="artist-name"
-                placeholder="Enter artist name"
-              />
-            </div>
-            <button type="submit">Add Artist</button>
-          </form>
-        </div>
-      </section>
-
-      <!-- Assign Artist to Song Section -->
-      <section id="assign">
-        <div class="container">
-          <h2>Assign Artist to Song</h2>
-          <form action="#" method="post">
-            <div class="form-group">
-              <label for="artist-id">Artist ID</label>
-              <input
-                type="number"
-                id="artist-id"
-                name="artist-id"
-                placeholder="Enter artist ID"
-              />
-            </div>
-            <div class="form-group">
-              <label for="song-id">Song ID</label>
-              <input
-                type="number"
-                id="song-id"
-                name="song-id"
-                placeholder="Enter song ID"
-              />
-            </div>
-            <div class="form-group">
-              <label for="role">Role</label>
-              <input
-                type="text"
-                id="role"
-                name="role"
-                placeholder="Enter role (e.g., Singer, Composer)"
-              />
-            </div>
-            <button type="submit">Assign Artist</button>
-          </form>
-        </div>
-      </section>
-    </main>
 
     <!-- Footer -->
     <footer>
