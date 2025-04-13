@@ -36,10 +36,15 @@ def signup():
     password = request.form['password']
 
     try:
+        while mycursor.nextset():
+            pass
+    
         sql = "INSERT INTO Users (Username, Password) VALUES (%s, %s)"
         val = (username, password)
         mycursor.execute(sql, val)
         mydb.commit()
+
+        
         user_id = mycursor.lastrowid 
         session['user_id'] = user_id
         session['username'] = username
