@@ -33,18 +33,20 @@
           <!-- Song list -->
           <div class="songs-list">
             <!-- One .song-item per song -->
-            {% for song in songs %}
+            {% if songs %} {% for song in songs %}
             <div class="song-item">
-              <span><strong>Song ID:</strong> {{ song.SongID }}</span>
-              <span><strong>Title:</strong> {{ song.Title }}</span>
-              <span><strong>Artist:</strong> {{ song.Artist }}</span>
-              <span><strong>Album:</strong> {{ song.Album }}</span>
-              <span><strong>Genre:</strong> {{ song.Genre }}</span>
-              <span><strong>Release Year:</strong> {{ song.ReleaseYear }}</span>
-              <span><strong>Duration:</strong> {{ song.Duration }}</span>
-              <span><strong>Added On:</strong> {{ song.AddedOn }}</span>
+              <span><strong>Song ID:</strong> {{ song[0] }}</span><br />
+              <span><strong>Title:</strong> {{ song[1] }}</span><br />
+              <span><strong>Artist:</strong> {{ song[2] }}</span><br />
+              <span><strong>Album:</strong> {{ song[3] }}</span><br />
+              <span><strong>Genre:</strong> {{ song[4] }}</span><br />
+              <span><strong>Release Year:</strong> {{ song[5] }}</span><br />
+              <span><strong>Duration:</strong> {{ song[6] }}</span><br />
+              <span><strong>Added On:</strong> {{ song[7] }}</span><br /><br />
             </div>
-            {% endfor %}
+            {% endfor %} {% else %}
+            <p>No songs found for this user.</p>
+            {% endif %}
             <!-- Repeat .song-item for each additional song -->
           </div>
         </div>

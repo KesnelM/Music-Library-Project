@@ -79,6 +79,7 @@ def sum_login():
 @app.route('/lib')
 def view_songs():
     user_id = session.get('user_id')
+    print(user_id)
     if not user_id:
         return redirect(url_for('signup_page'))
 
@@ -88,8 +89,13 @@ def view_songs():
         WHERE UserID = %s
         ORDER BY AddedOn DESC
     """
-    mycursor.execute(query, (user_id,))
+    createuser = user_id
+    mycursor.execute(query, (createuser,))
     songs = mycursor.fetchall()
+    print(songs)
+    if not songs:
+        print("No songs found for this user.")
+        return render_template('lib.html', songs=[])
 
     return render_template('lib.html', songs=songs)    
 
