@@ -30,6 +30,7 @@ def home_page():
 def login_page():
     return render_template('login.html')
 
+
 @app.route('/signup', methods=['POST'])
 def signup():
     username = request.form['username']
@@ -73,6 +74,24 @@ def sum_login():
         return redirect(url_for('home_page'))
     else:
         return "Invalid credentials"
+    
+
+@app.route('/lib')
+def view_songs():
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('signup_page'))
+
+    query = """
+        SELECT SongID, Title, Artist, Album, Genre, ReleaseYear, Duration, AddedOn
+        FROM Songs
+        WHERE UserID = %s
+        ORDER BY AddedOn DESC
+    """
+    mycursor.execute(query, (user_id,))
+    songs = mycursor.fetchall()
+
+    return render_template('lib.html', songs=songs)    
 
 @app.route('/add-song', methods=['POST'])
 def add_song():
@@ -102,5 +121,8 @@ def add_song():
 
     return render_template('index.html', message="Song added successfully!")
 
+
 if __name__ == '__main__':
+    print(app.url_map)
     app.run(debug=True)
+   

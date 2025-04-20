@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MusiCollection</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <!-- Header with Navigation -->
+    <header>
+      <div class="container header-container">
+        <h1>MusiCollection</h1>
+        <a href="{{ url_for('view_songs') }}">Go to My Songs</a>
+        <nav>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#albums">Albums</a></li>
+            <li><a href="#songs">Songs</a></li>
+            <li><a href="#artists">Artists</a></li>
+            <li><a href="#assign">Assign Artist</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+      <!-- Home Section -->
+      <section id="home">
+        <div class="container">
+          {% if username %}
+          <h3>Welcome, {{ username }}!</h3>
+          {% endif %}
+          <p>
+            Welcome to the Music Database Application. Use the navigation menu
+            above to explore and add information about albums, songs, and
+            artists.
+          </p>
+        </div>
+      </section>
+      <section id="add-song">
+        <div class="container">
+          <h2>Add New Song</h2>
+          <form action="/add-song" method="post">
+            <div class="form-group">
+              <label for="title">Song Title</label>
+              <input type="text" id="title" name="title" required />
+            </div>
+      
+            <div class="form-group">
+              <label for="artist">Artist Name</label>
+              <input type="text" id="artist-id" name="artist" required />
+            </div>
+      
+            <div class="form-group">
+              <label for="album">Album</label>
+              <input type="text" id="album" name="album" />
+            </div>
+      
+            <div class="form-group">
+              <label for="genre">Genre</label>
+              <input type="text" id="genre" name="genre" />
+            </div>
+      
+            <div class="form-group">
+              <label for="release-year">Release Year</label>
+              <input type="number" id="release-year" name="release-year" min="1900" max="2100" />
+            </div>
+      
+            <div class="form-group">
+              <label for="duration">Duration (HH:MM:SS)</label>
+              <input type="text" id="duration" name="duration" placeholder="00:03:30" />
+            </div>
+      
+            <div class="form-group">
+              <label for="track-number">Track Number</label>
+              <input type="number" id="track-number" name="track-number" min="1" />
+            </div>
+      
+            <button type="submit">Submit Song</button>
+          </form>
+        </div>
+      </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 MusiCollection App. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

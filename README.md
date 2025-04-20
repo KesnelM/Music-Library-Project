@@ -19,3 +19,10 @@
 
 4. Set Up MySQL
     python setup.py
+
+5. Run the app
+    python app.py
+
+6. Click the link
+    Running on http://127.0.0.1:5000
+    

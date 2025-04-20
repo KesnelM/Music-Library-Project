@@ -26,28 +26,29 @@
 
     <!-- Main Content Area for Viewing Songs -->
     <main>
-        <section id="view-songs">
-            <div class="container">
-              <h2>Your Songs</h2>
-          
-              <!-- Song list -->
-              <div class="songs-list">
-                <!-- One .song-item per song -->
-                <div class="song-item">
-                  <span><strong>Song ID:</strong> 1</span>
-                  <span><strong>Title:</strong> Example Song</span>
-                  <span><strong>Artist:</strong> John Doe</span>
-                  <span><strong>Album:</strong> Example Album</span>
-                  <span><strong>Genre:</strong> Rock</span>
-                  <span><strong>Release Year:</strong> 2025</span>
-                  <span><strong>Duration:</strong> 03:45</span>
-                  <span><strong>Added On:</strong> 2025-04-16 12:00:00</span>
-                </div>
-                <!-- Repeat .song-item for each additional song -->
-              </div>
+      <section id="view-songs">
+        <div class="container">
+          <h2>Your Songs</h2>
+
+          <!-- Song list -->
+          <div class="songs-list">
+            <!-- One .song-item per song -->
+            {% for song in songs %}
+            <div class="song-item">
+              <span><strong>Song ID:</strong> {{ song.SongID }}</span>
+              <span><strong>Title:</strong> {{ song.Title }}</span>
+              <span><strong>Artist:</strong> {{ song.Artist }}</span>
+              <span><strong>Album:</strong> {{ song.Album }}</span>
+              <span><strong>Genre:</strong> {{ song.Genre }}</span>
+              <span><strong>Release Year:</strong> {{ song.ReleaseYear }}</span>
+              <span><strong>Duration:</strong> {{ song.Duration }}</span>
+              <span><strong>Added On:</strong> {{ song.AddedOn }}</span>
             </div>
-          </section>
-          
+            {% endfor %}
+            <!-- Repeat .song-item for each additional song -->
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer (kept identical) -->
@@ -56,9 +57,5 @@
         <p>&copy; 2025 MusiCollection App. All rights reserved.</p>
       </div>
     </footer>
-
-    
   </body>
-
-  
 </html>
