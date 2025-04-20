@@ -121,6 +121,21 @@ def add_song():
 
     return render_template('index.html', message="Song added successfully!")
 
+@app.route('/delete/<int:song_id>', methods=['POST'])
+def delete_song(song_id):
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('signup_page'))
+
+    try:
+        sql = "DELETE FROM Songs WHERE SongID = %s AND UserID = %s"
+        mycursor.execute(sql, (song_id, user_id))
+        mydb.commit()
+    except Exception as e:
+        return f"An error occurred while deleting the song: {e}"
+
+    return redirect(url_for('view_songs'))
+
 
 @app.route('/edit/<int:song_id>', methods=['GET'])
 def edit_song(song_id):
