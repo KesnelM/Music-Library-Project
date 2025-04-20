@@ -43,6 +43,9 @@
               <span><strong>Release Year:</strong> {{ song.ReleaseYear }}</span>
               <span><strong>Duration:</strong> {{ song.Duration }}</span>
               <span><strong>Added On:</strong> {{ song.AddedOn }}</span>
+
+              <a href="{{ url_for('edit_song', song_id=song.SongID) }}">Edit</a>
+
             </div>
             {% endfor %}
             <!-- Repeat .song-item for each additional song -->
