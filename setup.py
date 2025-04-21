@@ -1,17 +1,19 @@
 import mysql.connector
 
+
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="YourNewSecurePassword!",
-    database="musicLib" ) 
+    password="YourNewSecurePassword!"
+     ) 
+
 
 mycursor = mydb.cursor()
 
 
 mycursor.execute("CREATE DATABASE IF NOT EXISTS musicLib ")
 
-
+mycursor.execute("USE musicLib")
 
 mycursor.execute("""CREATE TABLE IF NOT EXISTS Users
     (
@@ -37,5 +39,26 @@ mycursor.execute("""CREATE TABLE IF NOT EXISTS Songs
     ) 
     """)
 
+mycursor.execute("""
+CREATE TABLE IF NOT EXISTS Ratings (
+    RatingID INT AUTO_INCREMENT PRIMARY KEY,
+    SongID INT NOT NULL,
+    Rating TINYINT NOT NULL CHECK (Rating BETWEEN 1 AND 5),
+    RatedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (SongID) REFERENCES Songs(SongID)
+)
+""")
+
+mycursor.execute("""
+  CREATE OR REPLACE VIEW ArtistScore AS
+    SELECT 
+      s.Artist,
+      ROUND(AVG(r.Rating),2)    AS AvgRating,
+      COUNT(r.Rating)           AS NumRatings,
+      ROUND(AVG(r.Rating)*COUNT(r.Rating),2) AS Score
+    FROM Songs s
+    JOIN Ratings r ON s.SongID = r.SongID
+    GROUP BY s.Artist
+""") 
 
 print(mydb)

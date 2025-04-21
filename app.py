@@ -191,6 +191,65 @@ def update_song(song_id):
 
     return redirect(url_for('view_songs'))
 
+@app.route('/rate-song', methods=['POST'])
+def rate_song():
+    song_id = request.form.get('song_id')
+    rating  = int(request.form.get('rating', 0))
+
+    # simple validation
+    if rating < 1 or rating > 5:
+        return "Rating must be between 1 and 5", 400
+
+    sql = "INSERT INTO Ratings (SongID, Rating) VALUES (%s, %s)"
+    mycursor.execute(sql, (song_id, rating))
+    mydb.commit()
+    return redirect(url_for('view_songs'))
+
+@app.route('/artist-ratings')
+def artist_ratings():
+    sql = """
+      SELECT Artist, ROUND(AVG(Rating), 2) AS AvgRating
+      FROM Songs
+      JOIN Ratings ON Songs.SongID = Ratings.SongID
+      GROUP BY Artist
+      ORDER BY AvgRating DESC
+    """
+    mycursor.execute(sql)
+    ratings = mycursor.fetchall() 
+    return render_template('artist_ratings.html', ratings=ratings)
+
+@app.route('/best-artist')
+def best_artist():
+    mycursor.execute("""
+      SELECT
+        s.Artist           AS ArtistName,
+        ROUND(AVG(r.Rating), 2)  AS AvgRating,
+        COUNT(r.Rating)         AS NumRatings,
+        ROUND(AVG(r.Rating)*COUNT(r.Rating), 2) AS Score
+      FROM Songs s
+      JOIN Ratings r
+        ON s.SongID = r.SongID
+      GROUP BY s.Artist
+      ORDER BY Score DESC
+      LIMIT 1
+    """)
+    row = mycursor.fetchone()
+    if row:
+        artist_name, avg, num, score = row
+    else:
+        artist_name = avg = num = score = None
+
+    return render_template(
+      'best_artists.html',
+      artist=artist_name,
+      avg_rating=avg,
+      num_ratings=num,
+      score=score
+    )
+    
+    #best = mycursor.fetchone()  
+    #return render_template('best_artists.html', best=best)
+
 
 
 if __name__ == '__main__':

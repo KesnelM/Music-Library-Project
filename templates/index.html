@@ -9,6 +9,8 @@
   <body>
     <!-- Header with Navigation -->
     <header>
+      <li><a href="{{ url_for('artist_ratings') }}">Artist Ratings</a></li>
+      <li><a href="{{ url_for('best_artist') }}">Best Artist</a></li>
       <div class="container header-container">
         <h1>MusiCollection</h1>
         <a href="{{ url_for('view_songs') }}">Go to My Songs</a>

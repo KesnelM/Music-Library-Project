@@ -9,6 +9,8 @@
   <body>
     <!-- Header with Navigation (unchanged visual design) -->
     <header>
+      <li><a href="{{ url_for('artist_ratings') }}">Artist Ratings</a></li>
+      <li><a href="{{ url_for('best_artist') }}">Best Artist</a></li>
       <div class="container header-container">
         <h1>MusiCollection</h1>
         <nav>
@@ -34,6 +36,16 @@
           <div class="songs-list">
             <!-- One .song-item per song -->
             {% if songs %} {% for song in songs %}
+            <form action="{{ url_for('rate_song') }}" method="post" class="rating-form">
+              <input type="hidden" name="song_id" value="{{ song[0] }}" />
+              <label for="rating-{{ song[0] }}">Your Rating:</label>
+              <select id="rating-{{ song[0] }}" name="rating">
+                {% for i in range(1,6) %}
+                  <option value="{{ i }}">{{ i }}★</option>
+                {% endfor %}
+              </select>
+              <button type="submit">Rate</button>
+            </form>
             <div class="song-item">
               <span><strong>Song ID:</strong> {{ song[0] }}</span><br />
               <span><strong>Title:</strong> {{ song[1] }}</span><br />

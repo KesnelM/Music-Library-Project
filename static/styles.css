@@ -168,3 +168,14 @@ section#home .container p {
   display: block;
   margin: 3px 0;
 }
+
+.rating-form {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.songs-table th, .songs-table td {
+  padding: 8px 12px;
+}

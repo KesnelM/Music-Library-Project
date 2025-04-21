@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Best Rated Artist</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <h1>MusiCollection</h1>
+      <nav><ul>
+        <li><a href="{{ url_for('home_page') }}">Home</a></li>
+        <li><a href="{{ url_for('view_songs') }}">My Songs</a></li>
+        <li><a href="{{ url_for('artist_ratings') }}">Artist Ratings</a></li>
+        <li><a href="{{ url_for('best_artist') }}">Best Artist</a></li>
+      </ul></nav>
+    </div>
+  </header>
+  <main>
+    <section class="container">
+      <h2>🏆 Best Rated Artist</h2>
+      {% if artist %}
+      <p><strong>Artist:</strong> {{ artist }}</p>
+      <p><strong>Average Rating:</strong> {{ avg_rating }} ★</p>
+      <p><strong># of Ratings:</strong> {{ num_ratings }}</p>
+      <p><strong>Score (avg × count):</strong> {{ score }}</p>
+    {% else %}
+      <p>No ratings yet.</p>
+    {% endif %}
+    </section>
+  </main>
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 MusiCollection App. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
