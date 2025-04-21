@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Song - MusiCollection</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <h1>MusiCollection</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('home_page') }}">Home</a></li>
+          <li><a href="{{ url_for('view_songs') }}">View Songs</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main>
+    <section id="edit-song">
+      <div class="container">
+        <h2>Edit Song</h2>
+
+        <form action="{{ url_for('update_song', song_id=song[0]) }}" method="POST">
+          <label>Title:</label>
+          <input type="text" name="title" value="{{ song[1] }}" required /><br>
+
+          <label>Artist:</label>
+          <input type="text" name="artist" value="{{ song[2] }}" required /><br>
+
+          <label>Album:</label>
+          <input type="text" name="album" value="{{ song[3] }}" /><br>
+
+          <label>Genre:</label>
+          <input type="text" name="genre" value="{{ song[4] }}" /><br>
+
+          <label>Release Year:</label>
+          <input type="number" name="release-year" value="{{ song[5] }}" /><br>
+
+          <label>Duration (HH:MM:SS):</label>
+          <input type="text" name="duration" value="{{ song[6] }}" /><br>
+
+          <label>Track Number:</label>
+          <input type="number" name="track-number" value="{{ song[7] }}" /><br>
+
+          <button type="submit">Update Song</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 MusiCollection App. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
