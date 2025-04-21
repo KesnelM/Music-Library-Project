@@ -153,7 +153,7 @@ def edit_song(song_id):
     if not song:
         return "Song not found or unauthorized access."
 
-    return render_template('edit_song.html', song=song)
+    return render_template('editsong.html', song=song)
 
 
 @app.route('/update-song/<int:song_id>', methods=['POST'])
