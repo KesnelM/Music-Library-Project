@@ -148,6 +148,9 @@ def delete_song(song_id):
         return redirect(url_for('signup_page'))
 
     try:
+        delete_ratings = "DELETE FROM Ratings WHERE SongID = %s"
+        mycursor.execute(delete_ratings, (song_id,)) 
+        
         sql = "DELETE FROM Songs WHERE SongID = %s AND UserID = %s"
         mycursor.execute(sql, (song_id, user_id))
         mydb.commit()
