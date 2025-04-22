@@ -84,11 +84,25 @@ def view_songs():
         return redirect(url_for('signup_page'))
 
     query = """
-        SELECT SongID, Title, Artist, Album, Genre, ReleaseYear, Duration, AddedOn
-        FROM Songs
-        WHERE UserID = %s
-        ORDER BY AddedOn DESC
-    """
+    SELECT
+      s.SongID,
+      s.Title,
+      s.Artist,
+      s.Album,
+      s.Genre,
+      s.ReleaseYear,
+      s.Duration,
+      s.AddedOn,
+      IFNULL(ROUND(AVG(r.Rating), 2), 0) AS AvgRating,
+      COUNT(r.Rating)               AS RatingCount
+    FROM Songs AS s
+    LEFT JOIN Ratings AS r
+      ON s.SongID = r.SongID
+    WHERE s.UserID = %s
+    GROUP BY s.SongID
+    ORDER BY s.AddedOn DESC
+"""
+
     createuser = user_id
     mycursor.execute(query, (createuser,))
     songs = mycursor.fetchall()
